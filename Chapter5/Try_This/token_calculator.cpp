@@ -2,7 +2,7 @@
 #include "token.h"
 #include "token_stream.h"
 
-int main()
+int main() 
 {
     try
     {
