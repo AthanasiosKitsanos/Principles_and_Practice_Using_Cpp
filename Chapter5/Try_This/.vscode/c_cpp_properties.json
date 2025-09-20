@@ -1,0 +1,20 @@
+{
+  "configurations": [
+    {
+      "name": "Win32",
+      "includePath": [
+        "${workspaceFolder}/Chapter5/**",
+        "${workspaceFolder}/Chapter5/Headers",
+        "${workspaceFolder}/Chapter5/Try_This/Classes/Token_Stream",
+        "${workspaceFolder}/Chapter5/Try_This/Classes/Token",
+        "${workspaceFolder}/Chapter5/Try_This/Classes/Global"
+      ],
+      "defines": [],
+      "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
+      "cStandard": "c11",
+      "cppStandard": "c++20",
+      "intelliSenseMode": "windows-gcc-x64"
+    }
+  ],
+  "version": 4
+}

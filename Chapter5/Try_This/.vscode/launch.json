@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Token_Calculator",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Chapter5/Build/token_calculator.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Chapter5/Try_This",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:/msys64/ucrt64/bin/gdb.exe",
+            "preLaunchTask": "Token_Calculator"
+        }
+    ]
+}
