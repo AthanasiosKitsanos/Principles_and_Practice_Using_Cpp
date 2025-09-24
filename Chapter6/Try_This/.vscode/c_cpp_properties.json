@@ -7,7 +7,8 @@
         "${workspaceFolder}/Token",
         "${workspaceFolder}/Token_Stream",
         "${workspaceFolder}/Global",
-        "${workspaceFolder}/Variable"
+        "${workspaceFolder}/Variable",
+        "${workspaceFolder}/Definitions"
       ],
       "defines": [],
       "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",

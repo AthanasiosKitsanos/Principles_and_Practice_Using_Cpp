@@ -1,7 +1,4 @@
 #pragma once
-#include "global.h"
-
-class Token_Stream;
 
 class Token
 {
@@ -9,6 +6,7 @@ class Token
         double value;
         std::string name;
         char kind;
+        
 
         Token();
         Token(char k);
@@ -16,9 +14,9 @@ class Token
         Token(char k, std::string n);
         ~Token();
 
+        double statement();
+        double declaration();
         double expression();
         double term();
         double primary();
-        double statement();
-        double declaration();
 };

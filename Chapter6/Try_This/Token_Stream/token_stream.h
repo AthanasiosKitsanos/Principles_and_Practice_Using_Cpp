@@ -1,12 +1,11 @@
 #pragma once
-
-class Token;
+#include "token.h"
 
 class Token_Stream
 {
     private:
-        static bool is_full;
-        static Token buffer;
+        bool is_full;
+        Token buffer;
 
     public:
         Token_Stream();
@@ -15,6 +14,8 @@ class Token_Stream
         Token get();
         void putback(Token& token);
         void ignore(char c);
-        bool is_alpha(char c);
-        bool is_digit(char c);
+        double get_value(std::string s);
+        void set_value(std::string s, double d);
+        bool is_declared(std::string var);
+        double define_name(std::string var, double val);
 };

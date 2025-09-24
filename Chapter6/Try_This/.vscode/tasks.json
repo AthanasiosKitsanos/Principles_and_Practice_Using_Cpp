@@ -15,6 +15,7 @@
             "-I${workspaceFolder}",
             "-I${workspaceFolder}/Global",
             "-I${workspaceFolder}/Token",
+            "-I${workspaceFolder}/Definitions",
             "-I${workspaceFolder}/Token_Stream",
             "-I${workspaceFolder}/Variable",
             "-o",

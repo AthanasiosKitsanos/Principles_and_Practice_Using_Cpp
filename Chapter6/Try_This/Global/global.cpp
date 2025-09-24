@@ -1,7 +1,7 @@
-#include "headers.h"
 #include "global.h"
 #include "token_stream.h"
 #include "token.h"
+#include "definitions.h"
 #include "variable.h"
 
 Token_Stream* ts_global = nullptr;
@@ -26,11 +26,32 @@ void delete_stream_pointer()
         _aligned_free(ts_global);
         ts_global = nullptr;
     }
+}
 
-    std::cin.clear();
-    std::cout << "Press any key to exit...";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cin.get();
+void clean_up_mess()
+{
+    ts_global->ignore(_print);
+}
+
+void show_variables()
+{
+    for(int i = 0; i < var_table.size() - 1; i += 2)
+    {
+        std::cout << var_table[i].name << "(" << var_table[i].value << ") ";
+        std::cout << var_table[i + 1].name << "(" << var_table[i + 1].value << ") ";
+    }
+
+    if(var_table.size() % 2 == 1)
+    {
+        std::cout << var_table[var_table.size() - 1].name << "(" << var_table[var_table.size() - 1].value << ")";
+    }
+
+    std::cout << std::endl;
+}
+
+void show_functions()
+{
+
 }
 
 void calculate()
@@ -39,89 +60,29 @@ void calculate()
     {
         try
         {
-            std::cout << _PROMPT;
+            show_variables();
+
+            std::cout << _prompt;
 
             Token t = ts_global->get();
-            
-            while(t.kind == _PRINT)
+
+            while(t.kind == _print)
             {
                 t = ts_global->get();
             }
 
-            if(t.kind == _QUIT)
+            if(t.kind == _quit)
             {
                 break;
             }
             
             ts_global->putback(t);
-            std::cout << _RESULT << t.statement() << std::endl;
+            std::cout << _result << t.statement() <<std::endl;
         }
         catch(std::runtime_error& e)
         {
             std::cout << e.what() << std::endl;
             clean_up_mess();
         }
-        catch(std::invalid_argument& e)
-        {
-            std::cout << e.what() << std::endl;
-            clean_up_mess();
-        }
     }
-}
-
-void clean_up_mess()
-{
-    ts_global->ignore(_PRINT);
-}
-
-void set_value(std::string s, double d)
-{
-    for(Variable& v: var_table)
-    {
-        if(v.name == s)
-        {
-            v.value = d;
-            return;
-        }
-    }
-
-    throw std::runtime_error("Trying to write undefined variable" + s);
-}
-
-double get_value(std::string s)
-{
-    for(const Variable& v: var_table)
-    {
-        if(v.name == s)
-        {
-            return v.value;
-        }
-    }
-
-    throw std::runtime_error("Trying to read undefined variable " + s);
-}
-
-bool is_declared(std::string s)
-{
-    for(const Variable& v: var_table)
-    {
-        if(v.name == s)
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-double define_name(std::string var, double val)
-{
-    if(is_declared(var))
-    {
-        throw std::runtime_error("Variable already declare");
-    }
-
-    var_table.push_back(Variable{var, val});
-
-    return val;
 }
