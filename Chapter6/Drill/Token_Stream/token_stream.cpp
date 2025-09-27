@@ -32,7 +32,7 @@ Token Token_Stream::get() // reads characters from cin and compose a Token
             case '*':
             case '/':
             case '=':
-            case _quit:
+            case ',':
             case _print:
                 return Token{ch}; // let each character represent itself
 
@@ -67,7 +67,7 @@ Token Token_Stream::get() // reads characters from cin and compose a Token
                     {
                         if(v.name == s)
                         {
-                            return Token{_number, v.value};
+                            return Token{_let, v.name};
                         }
                     }
 
@@ -75,7 +75,7 @@ Token Token_Stream::get() // reads characters from cin and compose a Token
                     {
                         if(f.name == s)
                         {
-                            return Token{_let, s};
+                            return Token{_f, s};
                         }
                     }
 
@@ -83,7 +83,7 @@ Token Token_Stream::get() // reads characters from cin and compose a Token
 
                     if(s == _clear) return Token{_c};
 
-                    if(s == "quit") return Token{_quit};
+                    if(s == _exit) return Token{_e}; // chaned it for _quit to _exit
 
                     if(s == "print") return Token{_print};
 

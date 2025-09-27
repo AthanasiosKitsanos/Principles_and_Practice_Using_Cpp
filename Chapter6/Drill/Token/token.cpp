@@ -19,7 +19,7 @@ double Token::statement()
 
     switch(t.kind)
     {
-        case _let: case _f: // added if a function is declared
+        case _let:
             return declaration();
 
         default:
@@ -48,23 +48,9 @@ double Token::declaration() // assume we have seen "let" // handle: name = expre
             return d;
         }
 
-        case '(':
-        {
-            double d = statement();
-            
-            ts_global->define_function(t.name, Variable{t.name, d});
-            
-            return 0;
-        }
-
-        case ')':
-            return 0;
-
         default:
             throw std::runtime_error("')' expected after function declaration");
     }
-
-    return 1;
 }
 
 double Token::expression()
@@ -158,6 +144,11 @@ double Token::primary()
 
             t = ts_global->get();
 
+            if(t.kind == ',') // if () has 2 parameters inside
+            {
+                return d;
+            }
+
             if(t.kind != ')')
             {
                 throw std::runtime_error("')' expected");
@@ -175,11 +166,29 @@ double Token::primary()
         case _number:
             return t.value;
 
-        case _f:
+        case _f: // case it is a function
         {
-            ts_global->set_parameter(t.name, primary());
+            if(t.name == "sqrt") // chaecking for sqrt
+            {
+                double d = expression();
 
+                if(d < 0) // checking in case the number is less than zero
+                {
+                    throw std::runtime_error("Getting square root of negative number");
+                }
 
+                t = ts_global->get();
+            }
+
+            if(t.name == "pow") // getting the pow
+            {
+                double d = expression();
+
+                int multiplier = static_cast<int>(expression());
+
+                t = ts_global->get();
+                return pow(d, multiplier);
+            }
         }
             
         case _let:

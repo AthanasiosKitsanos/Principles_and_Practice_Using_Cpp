@@ -101,7 +101,7 @@ void calculate()
                 continue;
             }
             
-            if(t.kind == _quit)
+            if(t.kind == _e)
             {
                 break;
             }
