@@ -9,7 +9,7 @@
         "${workspaceFolder}/Global",
         "${workspaceFolder}/Variable",
         "${workspaceFolder}/Definitions",
-        "${workspaceFolder}/Functions"
+        "${workspaceFolder}/Symbol_Table"
       ],
       "defines": [],
       "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",

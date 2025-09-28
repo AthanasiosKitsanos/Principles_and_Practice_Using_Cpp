@@ -20,4 +20,5 @@ class Token
         double expression();
         double term();
         double primary();
+        double implement(Token t);
 };

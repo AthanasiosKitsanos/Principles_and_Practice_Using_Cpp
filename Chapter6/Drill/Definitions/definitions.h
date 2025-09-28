@@ -7,8 +7,8 @@
 #define _result "= "
 #define _let 'L'
 #define _name 'a'
-//#define _declkey "let"
-#define _declkey "#" // new keyword for type of variable
+#define _declkey "let"
+//#define _declkey "#" new keyword for type of variable
 #define _k "1000"
 #define _func_key "func"
 #define _f 'f'
@@ -16,3 +16,5 @@
 #define _h 'h'
 #define _clear "clear" // added to clear 
 #define _c 'c'
+#define _const 's'
+#define _imp 'i'

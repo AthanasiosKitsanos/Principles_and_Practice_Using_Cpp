@@ -3,11 +3,9 @@
 #include "token.h"
 #include "definitions.h"
 #include "variable.h"
-#include "functions.h"
 
 Token_Stream* ts_global = nullptr;
-std::vector<Variable> var_table;
-std::vector<Functions> func_table;
+Symbol_Table sym_table = Symbol_Table{};
 
 void initialize_stream_pointer()
 {
@@ -38,32 +36,15 @@ void clean_up_mess()
 void show_variables()
 {
     std::cout << "Variables:" << std::endl;
-    for(int i = 0; i < var_table.size() - 1; i += 2)
+    for(int i = 0; i < sym_table.var_table.size() - 1; i += 2)
     {
-        std::cout << var_table[i].name << '(' << var_table[i].value << ") ";
-        std::cout << var_table[i + 1].name << '(' << var_table[i + 1].value << ") ";
+        std::cout << (sym_table.var_table[i].is_const ? "const " : "") << sym_table.var_table[i].name << '(' << sym_table.var_table[i].value << "), ";
+        std::cout << (sym_table.var_table[i + 1].is_const ? "const " : "") << sym_table.var_table[i + 1].name << '(' << sym_table.var_table[i + 1].value << ")";
     }
 
-    if(var_table.size() % 2 == 1)
+    if(sym_table.var_table.size() % 2 == 1)
     {
-        std::cout << var_table[var_table.size() - 1].name << '(' << var_table[var_table.size() - 1].value << ')';
-    }
-
-    std::cout << std::endl;
-}
-
-void show_functions()
-{
-    std::cout << "Functions:" << std::endl;
-    for(int i = 0; i < func_table.size() - 1; i += 2)
-    {
-        std::cout << func_table[i].name << '(' << func_table[i].var.name << ") ";
-        std::cout << func_table[i + 1].name << '(' << func_table[i + 1].var.name << ") ";
-    }
-
-    if(func_table.size() % 2 == 1)
-    {
-        std::cout << func_table[func_table.size() - 1].name << '(' << func_table[var_table.size() - 1].var.name << ')';
+        std::cout << ", " << (sym_table.var_table[sym_table.var_table.size() - 1].is_const ? "const " : "") << sym_table.var_table[sym_table.var_table.size() - 1].name << '(' << sym_table.var_table[sym_table.var_table.size() - 1].value << ')';
     }
 
     std::cout << std::endl;
@@ -86,8 +67,6 @@ void calculate()
 
             if(t.kind == _h)
             {
-                std::cout << std::endl;
-                show_functions();
                 std::cout << std::endl;
                 show_variables();
 

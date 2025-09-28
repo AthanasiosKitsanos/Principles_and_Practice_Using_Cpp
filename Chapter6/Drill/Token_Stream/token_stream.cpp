@@ -4,7 +4,6 @@
 #include "definitions.h"
 #include "variable.h"
 #include "global.h"
-#include "functions.h"
 
 Token_Stream::Token_Stream():is_full(false), buffer(Token{}) {}
 Token_Stream::~Token_Stream() {}
@@ -36,6 +35,9 @@ Token Token_Stream::get() // reads characters from cin and compose a Token
             case _print:
                 return Token{ch}; // let each character represent itself
 
+            case '#':
+                return Token{_let}; // added the new declaration key
+
             case ' ':
                 break;
 
@@ -56,34 +58,18 @@ Token Token_Stream::get() // reads characters from cin and compose a Token
 
                     std::string s;
 
-                    while(std::cin.get(ch) && (isalpha(ch) || isdigit(ch)))
+                    while(std::cin.get(ch) && (isalpha(ch) || isdigit(ch) || ch == '_')) // allowing underscores in variabale names
                     {
                         s += ch;
                     }
 
                     std::cin.putback(ch);
 
-                    for(const Variable& v: var_table)
-                    {
-                        if(v.name == s)
-                        {
-                            return Token{_let, v.name};
-                        }
-                    }
-
-                    for(const Functions& f: func_table)
-                    {
-                        if(f.name == s)
-                        {
-                            return Token{_f, s};
-                        }
-                    }
-
+                    if(s == "const") return Token{_const};
                     if(s == "help") return Token{_h};
-
                     if(s == _clear) return Token{_c};
 
-                    if(s == _exit) return Token{_e}; // chaned it for _quit to _exit
+                    if(s == _exit) return Token{_e}; // changed it for _quit to _exit
 
                     if(s == "print") return Token{_print};
 
@@ -128,92 +114,4 @@ void Token_Stream::ignore(char c) // c represents the kind of Token
             return;
         }
     }
-}
-
-double Token_Stream::get_value(std::string s)
-{
-    for(const Variable& v: var_table)
-    {
-        if(v.name == s)
-        {
-            return v.value;
-        }
-    }
-
-    throw std::runtime_error("trying to read undefined variable " + s);
-}
-
-void Token_Stream::set_value(std::string s, double d)
-{
-    for(Variable& v: var_table)
-    {
-        if(v.name == s)
-        {
-            v.value = d;
-            return;
-        }
-    }
-
-    throw std::runtime_error("trying to write undefined variable " + s);
-}
-
-bool Token_Stream::is_declared(std::string var) // is var already in var_table?
-{
-    for(const Variable& v: var_table)
-    {
-        if(v.name == var)
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-double Token_Stream::define_name(std::string var, double val) // add(var, val) to var_table
-{
-    if(is_declared(var))
-    {
-        throw std::runtime_error(var + " declared twice");
-    }
-
-    var_table.push_back(Variable{var, val});
-    return val;
-}
-
-void Token_Stream::define_function(std::string name, Variable arg)
-{
-    if(is_defined(name))
-    {
-        throw std::runtime_error( name + arg.name + " function already exists");
-    }
-
-    func_table.push_back(Functions{name, arg});
-}
-
-bool Token_Stream::is_defined(std::string name)
-{
-    for(const Functions& f: func_table)
-    {
-        if(f.name == name)
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-void Token_Stream::set_parameter(std::string name, double value)
-{
-    for(Functions& f: func_table)
-    {
-        if(f.name == name)
-        {
-            f.var.value = value;
-            return;
-        }
-    }
-
-    throw std::runtime_error("Trying to set an undefined parameter");
 }

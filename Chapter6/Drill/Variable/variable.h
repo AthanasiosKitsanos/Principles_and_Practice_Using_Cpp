@@ -6,7 +6,8 @@ class Variable
     public:
         double value;
         std::string name;
-
-        Variable(std::string var, double val);
+        bool is_const;
+        
+        Variable(std::string var, double val, bool is_c);
         ~Variable();
 };

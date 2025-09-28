@@ -1,8 +1,5 @@
 #include "headers.h"
-#include "token.h"
-#include "token_stream.h"
 #include "global.h"
-#include "variable.h"
 
 int main() 
 {
@@ -10,10 +7,8 @@ int main()
     {
         initialize_stream_pointer();
 
-        ts_global->define_name("pi", 3.1415926535);
-        ts_global->define_name("e", 2.7182818284);
-        ts_global->define_function("pow", Variable{"x", 0});
-        ts_global->define_function("sqrt", Variable{"x", 0});
+        sym_table.define_name("pi", 3.1415926535, 1);
+        sym_table.define_name("e", 2.7182818284, 1);
         
         calculate();
     }

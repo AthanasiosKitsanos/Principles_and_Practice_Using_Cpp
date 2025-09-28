@@ -1,15 +1,15 @@
 #pragma once
+
 #include "headers.h"
+#include "symbol_table.h"
 
 class Token_Stream;
 class Variable;
-class Functions;
 class Token;
 
 extern Token_Stream* ts_global;
 
-extern std::vector<Variable> var_table;
-extern std::vector<Functions> func_table; // vector that holds functions
+extern Symbol_Table sym_table;
 
 void initialize_stream_pointer();
 
