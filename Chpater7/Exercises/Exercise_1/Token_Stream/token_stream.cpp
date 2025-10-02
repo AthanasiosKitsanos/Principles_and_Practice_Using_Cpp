@@ -5,7 +5,7 @@
 #include "variable.h"
 #include "global.h"
 
-Token_Stream::Token_Stream():is_full(false), buffer(Token{}) {}
+Token_Stream::Token_Stream(std::istream& stm):is_full(false), buffer(Token{}), stream(stm) {}
 Token_Stream::~Token_Stream() {}
 
 Token Token_Stream::get() // reads characters from cin and compose a Token
@@ -68,14 +68,14 @@ Token Token_Stream::get() // reads characters from cin and compose a Token
                     if(s == "const") return Token{_const};
                     if(s == "help") return Token{_h};
                     if(s == _clear) return Token{_c};
-
+                    if(s == "sqrt" || s == "pow") return Token{_f, s};
                     if(s == _exit) return Token{_e}; // changed it for _quit to _exit
 
                     if(s == "print") return Token{_print};
 
                     if(s == _declkey) return Token{_let}; // declaration keyword
 
-                    if(s == _func_key) return Token{_f}; // function keyword
+                    if(s == _func_key) return Token{_f, s}; // function keyword
 
                     return Token{_name, s};
                 }

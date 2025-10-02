@@ -4,33 +4,12 @@
 #include "definitions.h"
 #include "variable.h"
 
-Token_Stream* ts_global = nullptr;
+Token_Stream ts_global = Token_Stream{std::cin};
 Symbol_Table sym_table = Symbol_Table{};
 
-void initialize_stream_pointer()
+void clean_up_mess(Token_Stream ts)
 {
-    void* raw_memory = _aligned_malloc(sizeof(Token_Stream), alignof(Token_Stream));
-    if(!raw_memory)
-    {
-        throw std::runtime_error("Failed to allocate Token_Stream");
-    }
-
-    ts_global = new(raw_memory) Token_Stream();
-}
-
-void delete_stream_pointer()
-{
-    if(ts_global)
-    {
-        ts_global->~Token_Stream();
-        _aligned_free(ts_global);
-        ts_global = nullptr;
-    }
-}
-
-void clean_up_mess()
-{
-    ts_global->ignore(_print);
+    ts.ignore(_print);
 }
 
 void show_variables()
@@ -50,7 +29,7 @@ void show_variables()
     std::cout << std::endl;
 }
 
-void calculate()
+void calculate(Token_Stream& ts)
 {
     while(std::cin)
     {
@@ -58,11 +37,11 @@ void calculate()
         {
             std::cout << _prompt;
 
-            Token t = ts_global->get();
+            Token t = ts.get();
 
             while(t.kind == _print)
             {
-                t = ts_global->get();
+                t = ts.get();
             }
 
             if(t.kind == _h)
@@ -70,7 +49,7 @@ void calculate()
                 std::cout << std::endl;
                 show_variables();
 
-                t = ts_global->get();
+                t = ts.get();
                 continue;
             }
 
@@ -85,13 +64,13 @@ void calculate()
                 break;
             }
             
-            ts_global->putback(t);
-            std::cout << _result << t.statement() <<std::endl;
+            ts.putback(t);
+            std::cout << _result << t.statement(ts_global) <<std::endl;
         }
         catch(std::runtime_error& e)
         {
             std::cout << e.what() << std::endl;
-            clean_up_mess();
+            clean_up_mess(ts_global);
         }
     }
 }

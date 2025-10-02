@@ -2,26 +2,16 @@
 
 #include "headers.h"
 #include "symbol_table.h"
+#include "token_stream.h"
 
-class Token_Stream;
-class Variable;
-class Token;
-
-extern Token_Stream* ts_global;
-
+extern Token_Stream ts_global;
 extern Symbol_Table sym_table;
-
-void initialize_stream_pointer();
-
-void delete_stream_pointer();
 
 void show_variables();
 
-void show_functions();
+void calculate(Token_Stream& t);
 
-void calculate();
-
-void clean_up_mess();
+void clean_up_mess(Token_Stream t);
 
 double get_value(std::string s);
 

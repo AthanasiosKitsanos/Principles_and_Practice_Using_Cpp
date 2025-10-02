@@ -1,5 +1,7 @@
 #pragma once
 
+class Token_Stream;
+
 class Token
 {
     public:
@@ -15,10 +17,10 @@ class Token
         
         ~Token();
 
-        double statement();
-        double declaration();
-        double expression();
-        double term();
-        double primary();
-        double implement(Token t);
+        double statement(Token_Stream& t);
+        double declaration(Token_Stream& t);
+        double expression(Token_Stream& t);
+        double term(Token_Stream& t);
+        double primary(Token_Stream& t);
+        double implement(Token_Stream& t);
 };

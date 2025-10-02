@@ -21,7 +21,7 @@
             "-I${workspaceFolder}/Variable",
             "-I${workspaceFolder}/Symbol_Table",
             "-o",
-            "${workspaceFolder}/token_calculator.exe"
+            "${workspaceFolder}/src/token_calculator.exe"
         ],
         "group": {
             "kind": "build",

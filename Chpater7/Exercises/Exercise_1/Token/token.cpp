@@ -12,36 +12,36 @@ Token::Token(char k, std::string n): kind(k), name(n) {}
 Token::Token(char k, std::string n, double v): kind(k), name(n), value(v) {}
 Token::~Token() {}
 
-double Token::statement()
+double Token::statement(Token_Stream& ts)
 {
-    Token t = ts_global->get();
+    Token t = ts.get();
 
     switch(t.kind)
     {
         case _let:
-            return declaration();
+            return declaration(ts);
 
         case _const:
-            ts_global->putback(t);
-            return declaration();
+            ts.putback(t);
+            return declaration(ts);
 
         default:
-            ts_global->putback(t);
-            return expression();
+            ts.putback(t);
+            return expression(ts);
         
     }
 }
 
-double Token::declaration() // assume we have seen "let" // handle: name = expression // declare a variable called "name" with the initial value "expression"
+double Token::declaration(Token_Stream& ts) // assume we have seen "let" // handle: name = expression // declare a variable called "name" with the initial value "expression"
 {
     bool is_const = false;
 
-    Token t = ts_global->get();
+    Token t = ts.get();
 
     if(t.kind == _const)
     {
         is_const = true;
-        t = ts_global->get();
+        t = ts.get();
     }
 
     if(t.kind != _name)
@@ -49,13 +49,13 @@ double Token::declaration() // assume we have seen "let" // handle: name = expre
         throw std::runtime_error("name expected in declaration");
     }
 
-    Token t2 = ts_global->get();
+    Token t2 = ts.get();
     
     switch(t2.kind)
     {
         case '=':
         {
-            double d = expression();
+            double d = expression(ts);
             sym_table.define_name(t.name, d, is_const);
             return d;
         }
@@ -65,37 +65,39 @@ double Token::declaration() // assume we have seen "let" // handle: name = expre
     }
 }
 
-double Token::implement(Token t) // implements the variable again and returns it's new value
+double Token::implement(Token_Stream& ts) // implements the variable again and returns it's new value
 {
-    double d = expression();
+    Token t = ts.get();
+
+    double d = expression(ts);
     
     sym_table.set_value(t.name, d);
 
     return d;
 }
 
-double Token::expression()
+double Token::expression(Token_Stream& ts)
 {
-    double left = term();
+    double left = term(ts);
 
-    Token t = ts_global->get();
+    Token t = ts.get();
 
     while(true)
     {
         switch(t.kind)
         {
             case '+':
-                left += term();
-                t = ts_global->get();
+                left += term(ts);
+                t = ts.get();
                 break;
 
             case '-':
-                left -= term();
-                t = ts_global->get();
+                left -= term(ts);
+                t = ts.get();
                 break;
 
             default:
-                ts_global->putback(t);
+                ts.putback(t);
                 return left;
         }
     }
@@ -103,24 +105,24 @@ double Token::expression()
     return left;
 }
 
-double Token::term()
+double Token::term(Token_Stream& ts)
 {
-    double left = primary();
+    double left = primary(ts);
 
-    Token t = ts_global->get();
+    Token t = ts.get();
 
     while(true)
     {
         switch(t.kind)
         {
             case '*':
-                left *= primary();
-                t = ts_global->get();
+                left *= primary(ts);
+                t = ts.get();
                 break;
 
             case '/':
             {
-                double d = primary();
+                double d = primary(ts);
 
                 if(d == 0)
                 {
@@ -128,13 +130,13 @@ double Token::term()
                 }
 
                 left /= d;
-                t = ts_global->get();
+                t = ts.get();
                 break;
             }
 
             case '%':
             {
-                double d = primary();
+                double d = primary(ts);
 
                 if(d == 0)
                 {
@@ -142,32 +144,32 @@ double Token::term()
                 }
 
                 left = std::fmod(left, d);
-                t = ts_global->get();
+                t = ts.get();
                 break;
             }
 
             default:
-                ts_global->putback(t);
+                ts.putback(t);
                 return left;
         }
     }
 }
 
-double Token::primary()
+double Token::primary(Token_Stream& ts)
 {
-    Token t = ts_global->get();
+    Token t = ts.get();
 
     switch(t.kind)
     {
         case '(':
         {
-            double d = expression();
+            double d = expression(ts);
 
-            t = ts_global->get();
+            t = ts.get();
 
             if(t.kind == ',') // if () has 2 parameters inside
             {
-                ts_global->putback(t);
+                ts.putback(t);
                 return d;
             }
 
@@ -180,10 +182,10 @@ double Token::primary()
         }
 
         case '-':
-            return - primary();
+            return - primary(ts);
 
         case '+':
-            return + primary();
+            return + primary(ts);
 
         case _number:
             return t.value;
@@ -192,7 +194,7 @@ double Token::primary()
         {
             if(t.name == "sqrt") // chaecking for sqrt
             {
-                double d = expression();
+                double d = expression(ts);
 
                 if(d < 0) // checking in case the number is less than zero
                 {
@@ -204,22 +206,22 @@ double Token::primary()
 
             if(t.name == "pow") // getting the pow
             {
-                double d = expression();
+                double d = expression(ts);
 
-                t = ts_global->get();
+                t = ts.get();
 
                 if(t.kind != ',')
                 {
                     throw std::runtime_error("expected ',' after first parameter");
                 }
 
-                int multiplier = static_cast<int>(expression());
+                int multiplier = static_cast<int>(expression(ts));
 
-                t = ts_global->get();
+                t = ts.get();
 
                 if(t.kind != ')')
                 {
-                    ts_global->putback(t);
+                    ts.putback(t);
                     throw std::runtime_error("expected ')' after second parameter");
                 }
 
@@ -229,14 +231,14 @@ double Token::primary()
 
         case _name:
         {
-            Token t2 = ts_global->get();
+            Token t2 = ts.get();
 
             if(t2.kind == '=') // if true implements the variable again 
             {
-                return implement(t);
+                return implement(ts);
             }
 
-            ts_global->putback(t2);
+            ts.putback(t2);
             return sym_table.get_value(t.name);
         }
 

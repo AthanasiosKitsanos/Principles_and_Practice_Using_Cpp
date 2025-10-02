@@ -5,15 +5,14 @@
             "name": "Calc",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/token_calculator.exe",
+            "program": "${workspaceFolder}/src/token_calculator.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:/msys64/ucrt64/bin/gdb.exe",
-            "preLaunchTask": "Calc"
+            "miDebuggerPath": "C:/msys64/ucrt64/bin/gdb.exe"
         }
     ]
 }
