@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+        {
+        "label": "main2",
+        "type": "shell",
+        "command": "g++",
+        "args": [
+            "-g",
+            "${workspaceFolder}/main2.cpp",
+            "-o",
+            "${workspaceFolder}/src/main2.exe"
+        ],
+        "group": {
+            "kind": "build",
+            "isDefault": true
+        },
+        "problemMatcher": [
+            "$gcc"
+        ]
+        }
+    ]
+}

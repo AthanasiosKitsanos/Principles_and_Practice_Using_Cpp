@@ -1,0 +1,71 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+        {
+            "label": "Compile module foo",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-std=c++20",
+                "-fmodules-ts",
+                "-c",
+                "${workspaceFolder}/foo.cppm",
+                "-o",
+                "${workspaceFolder}/obj/foo.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "Compile imp foo",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-std=c++20",
+                "-fmodules-ts",
+                "-c",
+                "${workspaceFolder}/foo.cpp",
+                "-o",
+                "${workspaceFolder}/obj/foo_imp.o"
+            ],
+            "dependsOn": "Compile module foo",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "Compile and link use.cpp",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-std=c++20",
+                "-fmodules-ts",
+                "${workspaceFolder}/obj/foo.o",
+                "${workspaceFolder}/obj/foo_imp.o",
+                "${workspaceFolder}/use.cpp",
+                "-o",
+                "${workspaceFolder}/src/run.exe"
+            ],
+            "dependsOn":"Compile imp foo",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}

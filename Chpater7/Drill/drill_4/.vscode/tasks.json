@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+        {
+            "label": "Compile",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "${workspaceFolder}/use.cpp",
+                "${workspaceFolder}/Foo/foo.cpp",
+                "-I${workspaceFolder}/Foo",
+                "-o",
+                "${workspaceFolder}/src/use.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}
