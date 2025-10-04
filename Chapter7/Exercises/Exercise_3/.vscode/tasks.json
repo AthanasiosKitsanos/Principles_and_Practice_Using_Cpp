@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+        {
+            "label": "Compile",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "${workspaceFolder}/main.cpp",
+                "${workspaceFolder}/Global/global.cpp",
+                "-I${workspaceFolder}/Headers",
+                "-I${workspaceFolder}/Global",
+                "-o",
+                "${workspaceFolder}/src/main.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}
