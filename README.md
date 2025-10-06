@@ -34,8 +34,18 @@ class TerminationException: std::exception
 
 inline void termination_prompt()
 {
+    if(!std::cin.tie()) // in case someone disabled cin using std::cin.tie(nullptr), the std::cin.get() will flush the prompt
+    {
+        std::cin.tie(&std::cout);
+    }
+
     std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    if(std::cin.rdbuf()->in_avail() > 0) // if there are characters left, calls ignore
+    {
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
     std::cout << "Press any key to exit...";
     std::cin.get();
 }
