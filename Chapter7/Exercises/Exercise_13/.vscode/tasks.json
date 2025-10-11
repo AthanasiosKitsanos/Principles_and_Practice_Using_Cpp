@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+        {
+            "label": "Compile",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "${workspaceFolder}/src/main.cpp",
+                "${workspaceFolder}/Global/global.cpp",
+                "${workspaceFolder}/Classes/Conversion/conversion.cpp",
+                "${workspaceFolder}/Classes/Vec_Token/vec_token.cpp",
+                "-I${workspaceFolder}/Global",
+                "-I${workspaceFolder}/Classes/Conversion",
+                "-I${workspaceFolder}/Classes/Vec_Token",
+                "-o",
+                "${workspaceFolder}/build/main.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}
