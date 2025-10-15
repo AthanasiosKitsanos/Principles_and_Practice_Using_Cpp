@@ -2,15 +2,150 @@
   "version": "2.0.0",
   "tasks": [
         {
-            "label": "Compile",
+            "label": "Link",
+            "type": "shell",
+            "command": "g++",
+            "args":[
+                "-g",
+                "${workspaceFolder}/obj/main.o",
+                "${workspaceFolder}/obj/date.o",
+                "${workspaceFolder}/obj/global.o",
+                "${workspaceFolder}/obj/month.o",
+                "${workspaceFolder}/obj/year.o",
+                "${workspaceFolder}/obj/day.o",
+                "-o",
+                "${workspaceFolder}/build/run.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "compile main",
             "type": "shell",
             "command": "g++",
             "args": [
                 "-g",
                 "-c",
                 "${workspaceFolder}/src/main.cpp",
+                "-I${workspaceFolder}/classes/global",
                 "-o",
                 "${workspaceFolder}/obj/main.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "compile date",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/classes/date/date.cpp",
+                "-I${workspaceFolder}/classes/date",
+                "-I${workspaceFolder}/classes/date/month",
+                "-I${workspaceFolder}/classes/date/year",
+                "-I${workspaceFolder}/classes/date/day",
+                "-o",
+                "${workspaceFolder}/obj/date.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "compile global",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-c",
+                "${workspaceFolder}/classes/global/global.cpp",
+                "-I${workspaceFolder}/classes/date",
+                "-I${workspaceFolder}/classes/date/month",
+                "-I${workspaceFolder}/classes/date/year",
+                "-I${workspaceFolder}/classes/date/day",
+                "-o",
+                "${workspaceFolder}/obj/global.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "compile month",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-c",
+                "${workspaceFolder}/classes/date/month/month.cpp",
+                "-I${workspaceFolder}/classes/date",
+                "-I${workspaceFolder}/classes/date/month",
+                "-o",
+                "${workspaceFolder}/obj/month.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "compile year",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-c",
+                "${workspaceFolder}/classes/date/year/year.cpp",
+                "-I${workspaceFolder}/classes/date",
+                "-I${workspaceFolder}/classes/date/year",
+                "-o",
+                "${workspaceFolder}/obj/year.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "compile day",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-c",
+                "${workspaceFolder}/classes/date/day/day.cpp",
+                "-I${workspaceFolder}/classes/date",
+                "-I${workspaceFolder}/classes/date/day",
+                "-o",
+                "${workspaceFolder}/obj/day.o"
             ],
             "group": {
                 "kind": "build",
