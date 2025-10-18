@@ -3,7 +3,10 @@
     {
       "name": "Win32",
       "includePath": [
-        "${workspaceFolder}"
+        "${workspaceFolder}",
+        "${workspaceFolder}/classes/global",
+        "${workspaceFolder}/classes/name_pairs",
+        "${workspaceFolder}/classes/helper"
       ],
       "defines": [],
       "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",

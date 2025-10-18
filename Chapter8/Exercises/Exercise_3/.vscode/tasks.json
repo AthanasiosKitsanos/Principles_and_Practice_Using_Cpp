@@ -2,15 +2,100 @@
   "version": "2.0.0",
   "tasks": [
         {
-            "label": "Compile",
+            "label": "Run",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/run.exe",
+            "args": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+        
+        {
+            "label": "Link All",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "${workspaceFolder}/obj/main.o",
+                "${workspaceFolder}/obj/name_pairs.o",
+                "${workspaceFolder}/obj/helper.o",
+                "-o",
+                "${workspaceFolder}/build/run.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "compile main",
             "type": "shell",
             "command": "g++",
             "args": [
                 "-g",
                 "-c",
                 "${workspaceFolder}/src/main.cpp",
+                "-I${workspaceFolder}/classes/global",
+                "-I${workspaceFolder}/classes/name_pairs",
+                "-I${workspaceFolder}/classes/helper",
                 "-o",
                 "${workspaceFolder}/obj/main.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "compile name_pairs",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/classes/name_pairs/name_pairs.cpp",
+                "-I${workspaceFolder}/classes/name_pairs",
+                "-I${workspaceFolder}/classes/helper",
+                "-o",
+                "${workspaceFolder}/obj/name_pairs.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "compile helper",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/classes/helper/helper.cpp",
+                "-I${workspaceFolder}/classes/helper",
+                "-o",
+                "${workspaceFolder}/obj/helper.o"
             ],
             "group": {
                 "kind": "build",
