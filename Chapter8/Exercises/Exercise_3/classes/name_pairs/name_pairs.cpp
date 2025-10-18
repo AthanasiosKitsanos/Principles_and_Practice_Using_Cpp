@@ -3,6 +3,23 @@
 #include <algorithm>
 #include <clear_screen>
 
+name_pairs name_pairs::initialize()
+{
+    std::cout << "Starting initialization\n";
+    name_pairs np;
+    std::cout << "Enter a name: (enter stop to continue or quit to terminate):\n";
+    np.read_names(true);
+    if(np.name.size() == 0)
+    {
+        std::cout << "Exiting Initialization\n";
+        return np;
+    }
+    std::cout << "Enter the age for each name you entered: (enter quit to terminate):\n";
+    np.read_ages(true);
+    np.sort_vectors();
+    return np;
+}
+
 void name_pairs::read_names(const bool& loop)
 {
     char c;
@@ -52,15 +69,6 @@ void name_pairs::read_ages(const bool& loop)
     }while(i < name.size());
 }
 
-void name_pairs::print()
-{
-    clear_screen();
-    for(int i = 0; i < name.size(); i++)
-    {
-        std::cout << name[i] << ": " << age[i] << " years old" << std::endl;
-    }
-}
-
 void name_pairs::sort_vectors()
 {    
     std::string greater_name{""};
@@ -83,22 +91,15 @@ void name_pairs::sort_vectors()
     }
 }
 
-name_pairs name_pairs::initialize()
-{
-    std::cout << "Starting initialization\n";
-    name_pairs np;
-    std::cout << "Enter a name: (enter stop to continue or quit to terminate):\n";
-    np.read_names(true);
-    std::cout << "Enter the age for each name you entered: (enter quit to terminate):\n";
-    np.read_ages(true);
-    np.sort_vectors();
-    return np;
-}
-
 void name_pairs::add_name()
 {
     std::cout << "Enter a new name:\n" ;
     read_names(false);
+    if(name.size() == age.size())
+    {
+        std::cout << "Exitiong addition\n";
+        return;
+    }
     read_ages(false);
     sort_new_addition();
 }
@@ -106,24 +107,30 @@ void name_pairs::add_name()
 void name_pairs::remove_name()
 {
     std::cout << "Enter a name to remove: (enter stop to continue or quit to terminate):\n";
-    std::string r_name = get_text();
+    std::string r_name = "";
     int index{0};
-    if(r_name == stop)
-    {
-        std::cout << "Exiting name removal\n";
-        return;
-    }
     do
     {
+        r_name = get_text();
+        if(r_name == stop)
+        {
+            clear_screen();
+            std::cout << "Exiting name removal\n";
+            return;
+        }
+    
         index = find_name(r_name, name);
         if(index != -1)
         {
             name.erase(name.begin() + index);
             age.erase(age.begin() + index);
+            clear_screen();
             std::cout << "Name " << r_name << " successfully removed\n";
             return;
         }
+        clear_screen();
         std::cout << "Name not found. Please try again\n";
+        r_name = "";
     }while(true);
 }
 
@@ -140,4 +147,21 @@ void name_pairs::sort_new_addition()
     }
     name[index + 1] = new_name;
     age[index + 1] = new_age;
+}
+
+std::ostream& operator<<(std::ostream& os, const name_pairs& np)
+{
+    int i{0};
+    for(; i + 3 < np.name.size(); i += 6)
+    {
+        os << np.name[i] << np.age[i] << "years old\n";
+        os << np.name[i + 1] << np.age[i + 1] << "years old\n";
+        os << np.name[i + 2] << np.age[i + 2] << "years old\n";
+        os << np.name[i + 3] << np.age[i + 3] << "years old\n";
+    }
+    for(; i < np.name.size(); i++)
+    {
+        os << np.name[i] << np.age[i] << "years old\n";
+    }
+    return os;
 }
