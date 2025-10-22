@@ -2,19 +2,180 @@
   "version": "2.0.0",
   "tasks": [
         {
-            "label": "Compile",
+            "label": "Run",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/run.exe",
+            "args": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+        
+        {
+            "label": "Link All",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "${workspaceFolder}/obj/main.o",
+                "${workspaceFolder}/obj/application.o",
+                "${workspaceFolder}/obj/engine.o",
+                "${workspaceFolder}/obj/main_controller.o",
+                "${workspaceFolder}/obj/name_pairs.o",
+                "${workspaceFolder}/obj/input_controller.o",
+                "-o",
+                "${workspaceFolder}/build/run.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "Main",
             "type": "shell",
             "command": "g++",
             "args": [
                 "-g",
                 "-c",
                 "${workspaceFolder}/src/main.cpp",
+                "-I${workspaceFolder}/engine",
+                "-I${workspaceFolder}/application",
+                "-I${workspaceFolder}/input_controller",
+                "-I${workspaceFolder}/classes/name_pairs",
                 "-o",
                 "${workspaceFolder}/obj/main.o"
             ],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "Engine",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/engine/engine.cpp",
+                "-I${workspaceFolder}/engine",
+                "-I${workspaceFolder}/application",
+                "-I${workspaceFolder}/main_controller",
+                "-I${workspaceFolder}/input_controller",
+                "-I${workspaceFolder}/classes/name_pairs",
+                "-o",
+                "${workspaceFolder}/obj/engine.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "Application",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/application/application.cpp",
+                "-I${workspaceFolder}/application",
+                "-I${workspaceFolder}/input_controller",
+                "-I${workspaceFolder}/main_controller",
+                "-I${workspaceFolder}/classes/name_pairs",
+                "-o",
+                "${workspaceFolder}/obj/application.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "Main Controller",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/main_controller/main_controller.cpp",
+                "-I${workspaceFolder}/main_controller",
+                "-I${workspaceFolder}/classes/name_pairs",
+                "-I${workspaceFolder}/input_controller",
+                "-o",
+                "${workspaceFolder}/obj/main_controller.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "Input Controller",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/input_controller/input_controller.cpp",
+                "-I${workspaceFolder}/input_controller",
+                "-I${workspaceFolder}/classes/name_pairs",
+                "-o",
+                "${workspaceFolder}/obj/input_controller.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "Name Pairs",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/classes/name_pairs/name_pairs.cpp",
+                "-I${workspaceFolder}/classes/name_pairs",
+                "-o",
+                "${workspaceFolder}/obj/name_pairs.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
             },
             "problemMatcher": [
                 "$gcc"

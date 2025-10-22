@@ -3,7 +3,12 @@
     {
       "name": "Win32",
       "includePath": [
-        "${workspaceFolder}"
+        "${workspaceFolder}",
+        "${workspaceFolder}/application",
+        "${workspaceFolder}/classes/name_pairs",
+        "${workspaceFolder}/main_controller",
+        "${workspaceFolder}/engine",
+        "${workspaceFolder}/input_controller"
       ],
       "defines": [],
       "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",

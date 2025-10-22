@@ -60,6 +60,8 @@
         "thread": "cpp",
         "*tpp": "cpp",
         "list": "cpp",
-        "*.tpp": "cpp"
+        "*.tpp": "cpp",
+        "queue": "cpp",
+        "termination": "cpp"
     }
 }

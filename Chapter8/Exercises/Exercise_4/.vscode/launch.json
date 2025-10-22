@@ -2,10 +2,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Main",
+            "name": "Run Debugger",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/main.exe",
+            "program": "${workspaceFolder}/build/run.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
