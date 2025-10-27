@@ -8,15 +8,16 @@ namespace library
 {
     class book
     {
-        std::string m_title;
-        std::string m_author;
-        std::string m_isbn; // isbn is made of 4 characters, the 1st three should be digits and the last can be a digit or a letter
-        copyright_date m_date;
-        bool m_checked_out;
+        std::string m_title; // 0 -> 31
+        std::string m_author; // 32 -> 63
+        std::string m_isbn; // 64 -> 95 isbn is made of 4 characters, the 1st three should be digits and the last can be a digit or a letter
+        copyright_date m_date; // 96 -> 99
+        bool m_checked_out; // 100 
         bool is_valid_isbn();
 
         public:
-            book(const std::string& t, const std::string& a, const std::string i, const copyright_date& cd);
+            book();
+            book(const std::string& t, const std::string& a, const std::string& i, const copyright_date& cd);
             ~book();
 
             const std::string& get_title() const;

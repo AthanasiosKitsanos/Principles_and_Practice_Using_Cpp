@@ -2,6 +2,8 @@
 #include <memory>
 #include <termination>
 #include "book_manager.h"
+#include <clear_screen>
+#include <iostream>
 
 namespace console
 {
@@ -18,10 +20,11 @@ namespace console
             std::cin.tie(nullptr);
         }
     }
-
-    void application::wait_command() {} // TODO
-
-    void application::execute() {} // TODO
+    
+    void init_library()
+    {
+        
+    }
 
     void application::run()
     {
@@ -31,12 +34,19 @@ namespace console
             try
             {
                 p_bm->menu();
+                p_bm->wait_command();
+                p_bm->execute();
             }
             catch(TerminationException& e)
             {
+                clear_screen();
                 is_running = false;
-                std::cout << e.what();
-            }   
+                std::cout << e.what() << '\n';
+            }
+            catch(std::invalid_argument& e)
+            {
+                std::cout << e.what() << std::endl;
+            }
         }while(is_running);
         termination_prompt();
     }

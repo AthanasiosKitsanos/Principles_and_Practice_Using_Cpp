@@ -10,12 +10,12 @@ copyright_date::~copyright_date() {}
 
 bool copyright_date::is_valid_date()
 {
-    return (month < 13 && month > 0) && (day > 0 && day < 31);
+    return (year > 1000 && year < 2026) && (month < 13 && month > 0) && (day > 0 && day < 32);
 }
 
-short copyright_date::get_year() const { return year; }
-unsigned char copyright_date::get_month() const { return month; }
-unsigned char copyright_date::get_day() const { return day; }
+const int copyright_date::get_year() const { return year; }
+const int copyright_date::get_month() const { return month; }
+const int copyright_date::get_day() const { return day; }
 
 copyright_date::invalid::invalid(const char* c)
 {

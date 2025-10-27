@@ -25,12 +25,9 @@
             "type": "shell",
             "command": "g++",
             "args": [
-                "${workspaceFolder}/obj/main.o",
-                "${workspaceFolder}/obj/application.o",
-                "${workspaceFolder}/obj/copyright_date.o",
-                "${workspaceFolder}/obj/book.o",
-                "${workspaceFolder}/obj/book_manager.o",
-                "${workspaceFolder}/obj/i_stream.o",
+                "${workspaceFolder}/obj/*.o",
+                "-L${workspaceFolder:lib}",
+                "-lcustomlib",
                 "-o",
                 "${workspaceFolder}/build/run.exe"
             ],
@@ -77,6 +74,8 @@
                 "-I${workspaceFolder}/classes/book",
                 "-I${workspaceFolder}/classes/copyright_date",
                 "-I${workspaceFolder}/classes/i_stream",
+                "-I${workspaceFolder}/classes/commands",
+                
                 "-o",
                 "${workspaceFolder}/obj/application.o"
             ],
@@ -122,6 +121,7 @@
                 "-I${workspaceFolder}/classes/book",
                 "-I${workspaceFolder}/classes/copyright_date",
                 "-I${workspaceFolder}/classes/i_stream",
+                "-I${workspaceFolder}/classes/commands",
                 "-o",
                 "${workspaceFolder}/obj/book_manager.o"
             ],
@@ -167,6 +167,27 @@
                 "-I${workspaceFolder}/classes/copyright_date",
                 "-o",
                 "${workspaceFolder}/obj/copyright_date.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+
+        {
+            "label": "Commands",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/classes/commands/commands.cpp",
+                "-I${workspaceFolder}/classes/commands",
+                "-o",
+                "${workspaceFolder}/obj/commands.o"
             ],
             "group": {
                 "kind": "build",

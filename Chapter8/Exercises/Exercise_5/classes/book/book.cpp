@@ -1,10 +1,10 @@
 #include "book.h"
 #include <cstring>
 
-
 namespace library
 {
-    book::book(const std::string& t, const std::string& a, const std::string i, const copyright_date& cd): m_title(t), m_author(a), m_isbn(i), m_date(cd)
+    book::book():m_date(1, 1, 1), m_checked_out(false) {}
+    book::book(const std::string& t, const std::string& a, const std::string& i, const copyright_date& cd): m_title(t), m_author(a), m_isbn(i), m_date(cd), m_checked_out(false)
     {
         if(!is_valid_isbn()) throw invalid_isbn{"Invalid ISBN"};
     }
@@ -21,13 +21,12 @@ namespace library
 
     bool book::is_valid_isbn()
     {
-        int i{0};
-        do
+        if(m_isbn.size() != 4) return false;
+        for(int i = 0; i < m_isbn.length() - 1; i++)
         {
             if(!isdigit(m_isbn[i])) return false;
-            i++;
-        }while( i < 3);
-        if(!isdigit(m_isbn[3] || !isalpha(m_isbn[3]))) return false;
+        }
+        if(!isdigit(m_isbn[m_isbn.length() - 1]) && !isalpha(m_isbn[m_isbn.length() - 1])) return false;
         return true;
     }
 
@@ -51,9 +50,9 @@ namespace library
 std::ostream& operator<<(std::ostream& os, const library::book& book)
 {
     return os << "Title: " << book.get_title()
-        << "\n\tAuthor: " << book.get_author()
-        << "\n\tISBN: " << book.get_isbn()
-        << "\n\tAuthor: " << book.get_author()
-        << "\n\tRelease Date: " << book.get_c_date()
-        << "\n\tChecked out: " << (book.is_checked_out() ? "Available" : "Unavailable");
+    << "\nAuthor: " << book.get_author()
+    << "\nISBN: " << book.get_isbn()
+    << "\nAuthor: " << book.get_author()
+    << "\nRelease Date: " << book.get_c_date()
+    << "\nChecked out: " << (book.is_checked_out() ? "Unavailable\n" : "Available\n");
 }

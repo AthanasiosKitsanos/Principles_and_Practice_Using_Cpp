@@ -8,7 +8,8 @@
         "${workspaceFolder}/classes/book",
         "${workspaceFolder}/classes/i_stream",
         "${workspaceFolder}/book_manager",
-        "${workspaceFolder}/application"
+        "${workspaceFolder}/application",
+        "${workspaceFolder}/classes/commands"
       ],
       "defines": [],
       "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",

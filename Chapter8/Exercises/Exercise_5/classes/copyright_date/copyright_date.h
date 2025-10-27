@@ -13,9 +13,9 @@ class copyright_date
         copyright_date(const short& y, const unsigned char& m, const unsigned char& d);
         ~copyright_date();
 
-        short get_year() const;
-        unsigned char get_month() const;
-        unsigned char get_day() const;
+        const int get_year() const;
+        const int get_month() const;
+        const int get_day() const;
 
         class invalid: public std::exception
         {
