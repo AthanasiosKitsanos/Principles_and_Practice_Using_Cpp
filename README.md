@@ -7,6 +7,9 @@ by the writer **Bjarne Stroustrup**.
 
 **Solutions I came up with for solving the exercises and the drills**
 
+At the same time, you may notice that the folder structure for each exercise differs.  
+This is intentional, as I am experimenting with different ways to organize and divide the components of each program.
+
 In **_Chapter 7 and later_** there is a function named `termination_prompt()` 
 and class named `TerminationException`.  
 They are part of a **custom header file** I created called `termination`  
