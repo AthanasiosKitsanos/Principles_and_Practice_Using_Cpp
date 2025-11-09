@@ -1,0 +1,12 @@
+#pragma once
+#include "../io/input_stream.h"
+#include "../utilities/commands.h"
+#include "../core/book_manager.h"
+#include "../core/patron_manager.h"
+#include "../core/transaction_manager.h"
+#include "../models/books.h"
+#include "../models/patrons.h"
+#include "../models/copyright_date.h"
+#include "../models/token.h"
+#include "../models/transaction.h"
+#include "../../application/application.h"

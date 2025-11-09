@@ -1,0 +1,359 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+        {
+            "label": "Run.exe",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/run.exe",
+            "args": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+
+        {
+            "label": "Run Test",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/test.exe",
+            "args": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+
+        {
+            "label": "Build Test.exe",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "${workspaceFolder}/src/tests/test.cpp",
+                "-o",
+                "${workspaceFolder}/build/test.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Link",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "${workspaceFolder}/obj/main.o",
+                "-L${workspaceFolder}/library",
+                "-lapp",
+                "-L${workspaceFolder:lib}",
+                "-lcustomlib",
+                "-o",
+                "${workspaceFolder}/build/run.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Main",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/main.cpp",
+                "-o",
+                "${workspaceFolder}/obj/main.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Application",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/application/application.cpp",
+                "-o",
+                "${workspaceFolder}/obj/application.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Copyright_Date",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/models/copyright_date.cpp",
+                "-o",
+                "${workspaceFolder}/obj/models/copyright_date.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Patrons",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/models/patrons.cpp",
+                "-o",
+                "${workspaceFolder}/obj/models/patrons.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Books",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/models/books.cpp",
+                "-o",
+                "${workspaceFolder}/obj/models/books.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Input_Stream",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/io/input_stream.cpp",
+                "-o",
+                "${workspaceFolder}/obj/io/input_stream.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Book_manager",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/core/book_manager.cpp",
+                "-o",
+                "${workspaceFolder}/obj/core/book_manager.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Patron_manager",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/core/patron_manager.cpp",
+                "-o",
+                "${workspaceFolder}/obj/core/patron_manager.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Transaction_manager",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/core/transaction_manager.cpp",
+                "-o",
+                "${workspaceFolder}/obj/core/transaction_manager.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Token",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/models/token.cpp",
+                "-o",
+                "${workspaceFolder}/obj/models/token.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Smart_Ptr",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/console/smart_ptr.cpp",
+                "-o",
+                "${workspaceFolder}/obj/console/smart_ptr.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Validate",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/utilities/validate.cpp",
+                "-o",
+                "${workspaceFolder}/obj/utilities/validate.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Search",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/utilities/search.cpp",
+                "-o",
+                "${workspaceFolder}/obj/utilities/search.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Transaction",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/models/transaction.cpp",
+                "-o",
+                "${workspaceFolder}/obj/models/transaction.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Book_Date",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/models/book_date.cpp",
+                "-o",
+                "${workspaceFolder}/obj/models/book_date.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "Create Library File",
+            "type": "shell",
+            "command": "ar",
+            "args": [
+                "rcs",
+                "library/app.lib",
+                "${workspaceFolder}/obj/io/input_stream.o",
+                "${workspaceFolder}/obj/models/books.o",
+                "${workspaceFolder}/obj/models/copyright_date.o",
+                "${workspaceFolder}/obj/models/patrons.o",
+                "${workspaceFolder}/obj/models/token.o",
+                "${workspaceFolder}/obj/models/transaction.o",
+                "${workspaceFolder}/obj/models/book_date.o",
+                "${workspaceFolder}/obj/console/smart_ptr.o",
+                "${workspaceFolder}/obj/core/book_manager.o",
+                "${workspaceFolder}/obj/core/patron_manager.o",
+                "${workspaceFolder}/obj/core/transaction_manager.o",
+                "${workspaceFolder}/obj/utilities/validate.o",
+                "${workspaceFolder}/obj/utilities/search.o",
+                "${workspaceFolder}/obj/application.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        }
+    ]
+}
