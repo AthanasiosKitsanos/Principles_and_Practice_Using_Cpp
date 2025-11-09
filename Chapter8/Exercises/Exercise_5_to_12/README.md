@@ -27,7 +27,7 @@
 - **`While in Transactions`**
     - `find 'name'` -> finds the patron and the books he/she rented and the date of when each book was rented
     - `checkout 'title'` -> checks out the book and then it asks to who the book is rented while adding a fee
-    - `checkin 'name'` -> finds the patron how is checking in and then asks which title he/she returns, while removeing the fee
+    - `checkin 'name'` -> finds the patron how is checking in and then asks which title he/she returns, while removing the fee
     - `list` -> prints a list of all rented books
     - `back` -> goes back to the `Main Menu`
     - `clear` -> clears the console
