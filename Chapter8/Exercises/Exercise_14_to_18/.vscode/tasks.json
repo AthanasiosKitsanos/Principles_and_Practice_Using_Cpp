@@ -1,0 +1,80 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+        {
+            "label": "Run",
+            "type": "process",
+            "command": "${workspaceFolder}/build/run.exe",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+
+        {
+            "label": "Build Executable",
+            "type": "process",
+            "command": "g++",
+            "args": [
+                "${workspaceFolder}/src/main.cpp",
+                "-I${workspaceFolder}/includes",
+                "-L${workspaceFolder}/library",
+                "-lmoney",
+                "-L${workspaceFolder:lib}",
+                "-lcustomlib",
+                "-o",
+                "${workspaceFolder}/build/run.exe"
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Pre Compiled Header",
+            "type": "process",
+            "command": "g++",
+            "args": [
+                "-x",
+                "c++-header",
+                "${workspaceFolder}/includes/pch/pch.h",
+                "-o",
+                "${workspaceFolder}/includes/pch/pch.h.pch"
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Money",
+            "type": "process",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "${workspaceFolder}/src/models/money.cpp",
+                "-I${workspaceFolder}/includes",
+                "-o",
+                "${workspaceFolder}/obj/money.o"
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Library",
+            "type": "process",
+            "command": "ar",
+            "args": [
+                "rcs",
+                "library/money.lib",
+                "${workspaceFolder}/obj/money.o"
+            ],
+            "group": "build"
+        }
+    ]
+}
