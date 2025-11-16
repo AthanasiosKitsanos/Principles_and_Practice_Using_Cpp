@@ -28,7 +28,6 @@
                 "-I${workspaceFolder}/includes",
                 "-L${workspaceFolder}/library",
                 "-lmoney",
-                "-L${workspaceFolder:lib}",
                 "-lcustomlib",
                 "-o",
                 "${workspaceFolder}/build/run.exe"
@@ -43,9 +42,7 @@
             "args": [
                 "-x",
                 "c++-header",
-                "${workspaceFolder}/includes/pch/pch.h",
-                "-o",
-                "${workspaceFolder}/includes/pch/pch.h.pch"
+                "${workspaceFolder}/includes/pch/pch.h"
             ],
             "group": "build"
         },
