@@ -1,0 +1,104 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+        {
+            "label": "Run",
+            "type": "process",
+            "command": "${workspaceFolder}/build/run.exe",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+
+        {
+            "label": "Build",
+            "type": "process",
+            "command": "g++",
+            "args": [
+                "${workspaceFolder}/obj/test_output.o",
+                "${workspaceFolder}/obj/entity.o",
+                "${workspaceFolder}/obj/point.o",
+                "-o",
+                "${workspaceFolder}/build/run.exe"
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "GCH",
+            "type": "process",
+            "command": "g++",
+            "args": [
+                "-x",
+                "c++-header",
+                "${workspaceFolder}/models/pch.h",
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Test Output",
+            "type": "process",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "-O2",
+                "-std=c++20",
+                "-include",
+                "${workspaceFolder}/models/pch.h",
+                "-I${workspaceFolder}/models",
+                "${workspaceFolder}/test_output.cpp",
+                "-I${workspaceFolder}/models",
+                "-o",
+                "${workspaceFolder}/obj/test_output.o",
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Entity",
+            "type": "process",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "-O2",
+                "-include",
+                "${workspaceFolder}/models/pch.h",
+                "-I${workspaceFolder}/models/",
+                "${workspaceFolder}/models/entity.cpp",
+                "-o",
+                "${workspaceFolder}/obj/entity.o",
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Point",
+            "type": "process",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-c",
+                "-O2",
+                "-include",
+                "${workspaceFolder}/models/pch.h",
+                "-I${workspaceFolder}/models",
+                "${workspaceFolder}/models/point.cpp",
+                "-o",
+                "${workspaceFolder}/obj/point.o",
+            ],
+            "group": "build"
+        }
+    ]
+}
