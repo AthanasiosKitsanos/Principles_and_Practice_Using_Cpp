@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+        {
+            "label": "Run",
+            "type": "process",
+            "command": "${workspaceFolder}/build/run.exe",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+
+        {
+            "label": "Build",
+            "type": "process",
+            "command": "g++",
+            "args": [
+                "-O2",
+                "multi_input.cpp",
+                "-o",
+                "build/run.exe"
+            ],
+            "group": "build"
+        }
+    ]
+}
