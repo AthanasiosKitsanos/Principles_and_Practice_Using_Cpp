@@ -1,0 +1,86 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+        {
+            "label": "Run",
+            "type": "process",
+            "command": "${workspaceFolder}/build/run.exe",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+
+        {
+            "label": "Build",
+            "type": "process",
+            "command": "g++",
+            "args":
+            [
+                "-g",
+                "object/temp_stats.o",
+                "object/readings.o",
+                "-o",
+                "build/run.exe"
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "PCH",
+            "type": "process",
+            "command": "g++",
+            "args":
+            [
+                "-x",
+                "c++-header",
+                "includes/pch.h",
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Temp Stats",
+            "type": "process",
+            "command": "g++",
+            "args":
+            [
+                "-g",
+                "-c",
+                "-O2",
+                "-Iincludes",
+                "-Imodels",
+                "temp_stats.cpp",
+                "-o",
+                "object/temp_stats.o"
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Readings",
+            "type": "process",
+            "command": "g++",
+            "args":
+            [
+                "-g",
+                "-c",
+                "-O2",
+                "-Iincludes",
+                "-Imodels",
+                "models/readings.cpp",
+                "-o",
+                "object/readings.o"
+            ],
+            "group": "build"
+        }
+    ]
+}
