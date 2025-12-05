@@ -1,0 +1,4 @@
+Hour: 12   Temperature: 23 Celsius
+Hour: 15   Temperature: 68 Fahrenheit
+Hour: 23   Temperature: 67 Fahrenheit
+Hour: 2   Temperature: 17 Celsius
