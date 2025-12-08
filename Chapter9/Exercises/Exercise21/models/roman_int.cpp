@@ -1,6 +1,6 @@
 #include "roman_int.h"
 
-roman_int::roman_int(): roman_numeral(""), is_valid_state(true) {}
+roman_int::roman_int(): roman_numeral("") {}
 
 roman_int::~roman_int() {}
 

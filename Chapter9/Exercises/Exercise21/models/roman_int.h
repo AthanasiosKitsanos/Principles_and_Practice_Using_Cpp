@@ -5,7 +5,6 @@
 struct roman_int
 {
     std::string roman_numeral;
-    bool is_valid_state;
 
     explicit roman_int();
     ~roman_int();
