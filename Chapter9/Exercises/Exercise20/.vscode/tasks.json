@@ -1,0 +1,156 @@
+{
+  "version": "2.0.0",
+  "tasks":
+    [
+        {
+            "label": "Run",
+            "type": "process",
+            "command": "build/run.exe",
+            "group":
+            {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation":
+            {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+
+        {
+            "label": "Build",
+            "type":"process",
+            "command": "g++",
+            "args":
+            [
+                "object/*.o",
+                "-o",
+                "build/run.exe"
+            ],
+            "group": "build"
+        },
+        
+        {
+            "label": "Pre Compiled Headers",
+            "type":"process",
+            "command": "g++",
+            "args":
+            [
+                "-x",
+                "c++-header",
+                "-Imodels",
+                "includes/pch.h"
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Main",
+            "type":"process",
+            "command": "g++",
+            "args":
+            [
+                "-c",
+                "-O2",
+                "-Iincludes",
+                "-Imodels",
+                "main.cpp",
+                "-o",
+                "object/main.o"
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Readings",
+            "type":"process",
+            "command": "g++",
+            "args":
+            [
+                "-c",
+                "-O2",
+                "-Iincludes",
+                "-Imodels",
+                "-Iglobal",
+                "models/reading/reading.cpp",
+                "-o",
+                "object/reading.o"
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Month",
+            "type":"process",
+            "command": "g++",
+            "args":
+            [
+                "-c",
+                "-O2",
+                "-Iincludes",
+                "-Imodels",
+                "-Iglobal",
+                "models/month/month.cpp",
+                "-o",
+                "object/month.o"
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Year",
+            "type":"process",
+            "command": "g++",
+            "args":
+            [
+                "-c",
+                "-O2",
+                "-Iincludes",
+                "-Imodels",
+                "-Iglobal",
+                "models/year/year.cpp",
+                "-o",
+                "object/year.o"
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Parser Context",
+            "type":"process",
+            "command": "g++",
+            "args":
+            [
+                "-c",
+                "-O2",
+                "-Iincludes",
+                "models/parser_context/parser_context.cpp",
+                "-o",
+                "object/parser_context.o"
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Global",
+            "type":"process",
+            "command": "g++",
+            "args":
+            [
+                "-c",
+                "-O2",
+                "-Iincludes",
+                "-Imodels",
+                "global/global.cpp",
+                "-o",
+                "object/global.o"
+            ],
+            "group": "build"
+        }
+    ]
+}
