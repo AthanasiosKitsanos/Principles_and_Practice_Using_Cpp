@@ -9,7 +9,6 @@ class roman_calculator
     std::string input;
     stream_pointer* sp;
     char* r_numeral;
-    short repeat;
     
     roman_int expression();
     roman_int term();

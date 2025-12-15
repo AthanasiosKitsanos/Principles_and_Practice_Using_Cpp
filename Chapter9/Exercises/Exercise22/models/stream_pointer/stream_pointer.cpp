@@ -43,9 +43,11 @@ bool stream_pointer::is_repeatable(char c)
 {
     switch(c)
     {
+        //Those characters can be reapeted 3 times at most
         case 'i': case 'I': case 'x': case 'X':
         case 'c': case 'C': case 'm': case 'M':
         return true;
     }
+    //anything else can be repeated only once
     return false;
 }

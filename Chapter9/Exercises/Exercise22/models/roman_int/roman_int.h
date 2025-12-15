@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 
+// Vector used for the int convertion to Roman Numeral
 inline std::vector<std::pair<int, const char*>> roman_vector
 {
     {1000, "M"}, {900, "CM"}, {500, "D"},
@@ -14,11 +15,12 @@ inline std::vector<std::pair<int, const char*>> roman_vector
 struct roman_int
 {
     //Variables
-    int decimal;
-    bool is_valid;
+    int decimal; // stores an int
+    bool is_valid; // flag that shows if the instance is in a valid state
     
     //Constructors
     explicit roman_int();
+    explicit roman_int(const bool valid);
     explicit roman_int(const int value);
     roman_int(const roman_int& other);
     ~roman_int();

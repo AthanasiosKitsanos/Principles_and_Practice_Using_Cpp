@@ -2,7 +2,6 @@
 
 int main()
 {
-    roman_calculator calc{};
-    calc.initialize_stream();
-    calc.run();
+    roman_calculator calc{}; // create a calculator object
+    calc.run(); // run the calculator
 }
