@@ -1,0 +1,4 @@
+Example 1: ) = Division by zero is not allowed
+Example 1:  = 17
+Example 1: 2 + 3 * (10/2) = 17
+Example 1: 2 + 3 * (10/2 = ')' expected
