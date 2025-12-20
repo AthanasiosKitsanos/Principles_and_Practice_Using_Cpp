@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks":
+    [
+        {
+            "label": "Run",
+            "type": "process",
+            "command": "bin/run.exe",
+            "group":
+            {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation":
+            {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+
+        {
+            "label": "Build",
+            "type": "process",
+            "command": "g++",
+            "args":
+            [
+                "-O3",
+                "main.cpp",
+                "-o",
+                "bin/run.exe"
+            ],
+            "group": "build"
+        }
+    ]
+}

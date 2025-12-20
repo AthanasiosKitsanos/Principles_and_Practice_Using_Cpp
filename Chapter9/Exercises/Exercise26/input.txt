@@ -1,0 +1,1 @@
+bears: 17 elephants: 9 dogs: 25 car: 1
