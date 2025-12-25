@@ -7,4 +7,6 @@
 Note that I had help for some equations since I don't know all of them  
 for example on how to create the Sinusoidal Curve
 
-The result is interactive, meaning when you resize the window, everything is moving relative to the window's size
+The result is interactive, meaning when you resize the window, everything is moving relative to the window's size  
+The bin folder contains all the .dll for this chapter as for now.  
+More may be added later
