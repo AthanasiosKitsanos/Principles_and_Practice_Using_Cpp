@@ -5,7 +5,7 @@ main_window::main_window(QWidget* parent):
     QWidget(parent),
     line1(width() * x_axis_spos, height() * y_axis_spos, width() * x_axis_epos, height() * y_axis_spos),
     line2(0, 0, 0, 0),
-    button(new QPushButton{"Next", this}), back{new QPushButton{"Back", this}}, page(0)
+    button(new QPushButton{"Next", this}), back{new QPushButton{"Back", this}}, page(min_pages)
 {
     setMinimumSize(600, 400);
     setMaximumSize(2560, 1080);
@@ -56,15 +56,14 @@ void main_window::paintEvent(QPaintEvent*)
 
 void main_window::when_button_pressed()
 {
-    if(page == max_pages) return;
-    ++page;
+    page = (page + 1) % max_pages;
     update();
 }
 
 void main_window::when_back_pressed()
 {
-    if(page == 0) return;
-    --page;
+    page = (page - 1) % (max_pages - 1);
+    if(page < 0) page = max_pages - 1;
     update();
 }
 
@@ -129,6 +128,8 @@ void main_window::begin_drawing(QPainter& painter, QFont& font)
                     previous = current;
                 }
             }
+            default:
+                return;
         }
     }
 }

@@ -7,7 +7,8 @@ constexpr float x_axis_epos = 0.5f;
 constexpr float y_axis_spos = 0.85f;
 constexpr float y_axis_epos = 0.25f;
 constexpr short ticks = 10;
-constexpr short max_pages = 4;
+constexpr short min_pages = 0;
+constexpr short max_pages = 5;
 
 class main_window: public QWidget
 {
