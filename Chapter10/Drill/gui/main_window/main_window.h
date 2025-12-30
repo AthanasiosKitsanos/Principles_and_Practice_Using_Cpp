@@ -8,7 +8,9 @@ constexpr float y_axis_spos = 0.85f;
 constexpr float y_axis_epos = 0.25f;
 constexpr short ticks = 10;
 constexpr short min_pages = 0;
-constexpr short max_pages = 5;
+constexpr short max_pages = 11;
+
+class thread_pool;
 
 class main_window: public QWidget
 {
@@ -30,6 +32,7 @@ class main_window: public QWidget
 
     public:
         explicit main_window(QWidget* parent = nullptr);
-        void begin_drawing(QPainter& painter, QFont& font);
+        ~main_window();
+        void begin_drawing(QPainter& painter, QFont& font, QPen& pen);
         void dsin(double d);
 };

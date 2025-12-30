@@ -5,12 +5,12 @@ main_window::main_window(QWidget* parent):
     QWidget(parent),
     line1(width() * x_axis_spos, height() * y_axis_spos, width() * x_axis_epos, height() * y_axis_spos),
     line2(0, 0, 0, 0),
-    button(new QPushButton{"Next", this}), back{new QPushButton{"Back", this}}, page(min_pages)
+    button(new QPushButton{"Next", this}), back{new QPushButton{"Back", this}},
+    page(min_pages)
 {
     setMinimumSize(600, 400);
-    setMaximumSize(2560, 1080);
+    setMaximumSize(600, 400);
     setWindowTitle("Drill");
-    resize(600, 400);
     setWindowIcon(QIcon{"icons\\icons8-c-256.ico"});
     {
         QPalette palette;
@@ -22,6 +22,8 @@ main_window::main_window(QWidget* parent):
     connect(button, &QPushButton::clicked, this, &main_window::when_button_pressed);
     connect(back, &QPushButton::clicked, this, &main_window::when_back_pressed);
 }
+
+main_window::~main_window() {}
 
 void main_window::resizeEvent(QResizeEvent*)
 {
@@ -51,7 +53,7 @@ void main_window::paintEvent(QPaintEvent*)
     pen.setColor(Qt::black);
     pen.setWidth(2);
     painter.setPen(pen);
-    begin_drawing(painter, font);
+    begin_drawing(painter, font, pen);
 }
 
 void main_window::when_button_pressed()
@@ -72,7 +74,7 @@ void main_window::dsin(double d)
     double a = std::sin(d);
 }
 
-void main_window::begin_drawing(QPainter& painter, QFont& font)
+void main_window::begin_drawing(QPainter& painter, QFont& font, QPen& pen)
 {
     int x(width()), y{height()};
     for(short p{1}; p <= page; ++p)
@@ -127,6 +129,76 @@ void main_window::begin_drawing(QPainter& painter, QFont& font)
                     if(step > 0) painter.drawLine(previous, current);
                     previous = current;
                 }
+                break;
+            }
+            case 5:
+            {
+                pen.setColor(Qt::red);
+                pen.setStyle(Qt::DashLine);
+                pen.setWidth(3);
+                painter.setPen(pen);
+                QPolygon poly;
+                poly.append(QPoint{x / 2, y / 2 + 50});
+                poly.append(QPoint{x / 2 + 150, y / 2 + 50});
+                poly.append(QPoint{x / 2 + 75, y / 2 - 100});
+                painter.drawPolygon(poly);
+                break;
+            }
+            case 6:
+            {
+                pen.setColor(Qt::black);
+                pen.setStyle(Qt::SolidLine);
+                painter.setBrush(Qt::yellow);
+                painter.setPen(pen);
+                QPolygon poly;
+                poly.append(QPoint{x / 2, y / 2 + 50});
+                poly.append(QPoint{x / 2 - 150, y / 2 + 50});
+                poly.append(QPoint{x / 2 - 150, y / 2 + 100});
+                poly.append(QPoint{x / 2, y / 2 + 100});
+                painter.drawPolygon(poly);
+                break;
+            }
+            case 7:
+            {
+                pen.setColor(Qt::black);
+                pen.setStyle(Qt::DashLine);
+                painter.setBrush(Qt::green);
+                painter.setPen(pen);
+                QPolygon poly;
+                poly.append(QPoint{50, y - y / 2 - 50});
+                poly.append(QPoint{100, y - y / 2 - 80});
+                poly.append(QPoint{220, y - y / 2 - 80});
+                poly.append(QPoint{220, y - y / 2 - 20});
+                poly.append(QPoint{100, y - y / 2 - 20});
+                painter.drawPolygon(poly);
+                break;
+            }
+            case 8:
+            {
+                QPixmap image{"images/mars_copter.jpg"};
+                painter.drawPixmap(x * 0.8, y * 0.8, image.scaled(100, 80, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+                break;
+            }
+            case 9:
+            {
+                QPixmap image{"images/swiss.jpg"};
+                painter.drawPixmap(x * 0.6, y * 0.7, image.scaled(100, 80, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+                break;
+            }
+            case 10:
+            {
+                pen.setStyle(Qt::SolidLine);
+                pen.setColor(Qt::black);
+                pen.setWidth(2);
+                painter.setBrush(Qt::NoBrush);
+                painter.setPen(pen);
+                QRect circle{70, 200, 70, 70};
+                painter.drawEllipse(circle);
+                painter.setPen(Qt::red);
+                painter.drawText(circle, Qt::AlignCenter, "x");
+                QRect ellipse{70, 200, 140, 35};
+                painter.drawEllipse(circle.center().x() - 140 / 2, circle.center().y() - 35/ 2, 140, 35);
+                break;
             }
             default:
                 return;
