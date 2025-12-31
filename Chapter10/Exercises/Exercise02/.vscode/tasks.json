@@ -1,0 +1,48 @@
+{
+  "version": "2.0.0",
+  "tasks":
+    [
+        {
+            "label": "Run",
+            "type": "process",
+            "command": "bin/release/run.exe",
+            "group":
+            {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation":
+            {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+
+        {
+            "label": "Build",
+            "type": "process",
+            "command": "cmake",
+            "args":
+            [
+                "--build",
+                "build"
+            ],
+            "group": "build"
+        },
+
+        {
+            "label": "Connect DLL",
+            "type": "process",
+            "command": "windeployqt",
+            "args":
+            [
+                "${workspaceFolder}/bin/release"
+            ],
+            "group": "build"
+        }
+    ]
+}
