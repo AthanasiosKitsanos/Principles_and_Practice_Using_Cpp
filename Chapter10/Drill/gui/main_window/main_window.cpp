@@ -64,8 +64,7 @@ void main_window::when_button_pressed()
 
 void main_window::when_back_pressed()
 {
-    page = (page - 1) % (max_pages - 1);
-    if(page < 0) page = max_pages - 1;
+    page = (max_pages + page - 1) % max_pages;
     update();
 }
 
