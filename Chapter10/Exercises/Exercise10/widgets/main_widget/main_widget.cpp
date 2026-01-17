@@ -1,4 +1,5 @@
 #include "main_widget.h"
+#include <QtMAth>
 
 constexpr int page_1_begin{0};
 constexpr int page_1_end{6};
@@ -12,7 +13,7 @@ main_widget::main_widget(QWidget* parent) noexcept: QWidget(parent), p1_buffer()
     setAttribute(Qt::WA_OpaquePaintEvent);
     int initial_width{current_screen.width()};
     int initial_height{current_screen.height()};
-    setMinimumSize(initial_width* 0.25f, initial_height * 0.33f);
+    setMinimumSize(initial_width* 0.5f, initial_height * 0.5f);
     setWindowTitle("Exercise 10");
     paint_pixmaps(initial_width, initial_height);
     QPalette palette;
@@ -49,7 +50,7 @@ void main_widget::paintEvent(QPaintEvent*)
 {
     QPainter painter{this};
     pixmap = current_pixmap->scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    painter.setRenderHint(QPainter::SmoothPixmapTransform);
+    painter.setRenderHint(QPainter::Antialiasing, QPainter::SmoothPixmapTransform);
     painter.drawPixmap(0, 0, pixmap);
 }
 
@@ -71,21 +72,38 @@ void main_widget::paint_pixmap_1(const int width, const int height, QRect& frame
     QPainter painter{&p1_buffer};
     painter.setFont(font);
     painter.drawText(width * 0.477f, height * 0.97f, "Page 1");
+    data_block* current{nullptr};
     for(short i{page_1_begin}; i < page_1_end; ++i)
     {
-        frame.moveTo(width * data_list[i].x_factor, height * data_list[i].y_factor);
+        current = &data_list[i];
+        frame.moveTo(width * current->new_x_pos, height * current->new_y_pos);
         data_list[i].set_frames(frame);
-        painter.setPen(Qt::black);
-        if(data_list[i].lines > 0)
+        if(data_list[i].arrow_num > 0)
         {
-            draw_arrows(static_cast<data_index>(i), data_list[i] , painter);
+            painter.save();
+            QPen pen;
+            pen.setWidth(5);
+            pen.setColor(Qt::black);
+            painter.setPen(pen);
+            for(short j{0}; j < current->arrow_num; ++j)
+            {
+                const data_block& linked_data = data_list[*(data_list[i].links + j)];
+                QPoint end(current->get_end_linked(linked_data));
+                QLine line(current->get_start_current(), end);
+                current->arrows.create_arrow(line);
+                painter.drawLine(current->arrow_body());
+                painter.drawLine(end, current->arrow_head_1());
+                painter.drawLine(end, current->arrow_head_2());
+            }
+            painter.restore();
         }
         painter.setBrush(Qt::yellow);
-        painter.drawRect(data_list[i].constructor_frame);
+        painter.drawRect(current->frames.context_frame);
         painter.setPen(Qt::blue);
-        painter.drawText(data_list[i].file_type_frame, Qt::AlignBottom, data_list[i].file_type);
-        painter.drawText(data_list[i].constructor_frame, Qt::AlignCenter, data_list[i].constructor_string);
+        painter.drawText(current->frames.title_frame, Qt::AlignBottom, current->context.file_type);
+        painter.drawText(current->frames.context_frame, Qt::AlignCenter, current->context.constructor_string);
     }
+    current = nullptr;
 }
 
 void main_widget::paint_pixmap_2(const int width, const int height, QRect& frame, QFont& font) noexcept
@@ -95,36 +113,44 @@ void main_widget::paint_pixmap_2(const int width, const int height, QRect& frame
     QPainter painter{&p2_buffer};
     painter.setFont(font);
     painter.drawText(width * 0.477f, height * 0.97f, "Page 2");
-    frame.moveTo(width * data_list[page_2_begin].x_factor, height * data_list[page_2_begin].y_factor);
-    data_list[page_2_begin].set_frames(frame);
+    data_block* current{&data_list[page_2_begin]};
+    frame.moveTo(width * current->new_x_pos, height * current->new_y_pos);
+    current->set_frames(frame);
     painter.setPen(Qt::black);
     painter.setBrush(Qt::yellow);
-    painter.drawRect(data_list[page_2_begin].constructor_frame);
+    painter.drawRect(current->frames.context_frame);
     painter.setPen(Qt::black);
-    painter.drawText(data_list[page_2_begin].constructor_frame, Qt::AlignCenter, data_list[page_2_begin].constructor_string);
+    painter.drawText(current->frames.context_frame, Qt::AlignCenter, current->context.constructor_string);
     for(short i{page_2_begin + 1}; i < page_2_end; ++i)
     {
-        frame.moveTo(width * data_list[i].x_factor, height * data_list[i].y_factor);
-        data_list[i].set_frames(frame);
+        current = &data_list[i];
+        frame.moveTo(width * current->new_x_pos, height * current->new_y_pos);
+        current->set_frames(frame);
+        if(current->arrow_num > 0)
+        {
+            painter.save();
+            QPen pen;
+            pen.setWidth(5);
+            pen.setColor(Qt::black);
+            painter.setPen(pen);
+            for(short j{0}; j < current->arrow_num; ++j)
+            {
+                const data_block& linked_data = data_list[*(data_list[i].links + j)];
+                QPoint end(current->get_end_linked(linked_data));
+                QLine line(current->get_start_current(), end);
+                current->arrows.create_arrow(line);
+                painter.drawLine(current->arrow_body());
+                painter.drawLine(end, current->arrow_head_1());
+                painter.drawLine(end, current->arrow_head_2());
+            }
+            painter.restore();
+        }
         painter.setPen(Qt::black);
         painter.setBrush(Qt::yellow);
-        painter.drawRect(data_list[i].constructor_frame);
+        painter.drawRect(current->frames.context_frame);
         painter.setPen(Qt::blue);
-        painter.drawText(data_list[i].file_type_frame, Qt::AlignBottom, data_list[i].file_type);
-        painter.drawText(data_list[i].constructor_frame, Qt::AlignCenter, data_list[i].constructor_string);
+        painter.drawText(current->frames.title_frame, Qt::AlignBottom, current->context.file_type);
+        painter.drawText(current->frames.context_frame, Qt::AlignCenter, current->context.constructor_string);
     }
-}
-
-void main_widget::draw_arrows(const data_index& index, const show_data& data, QPainter& painter)
-{
-    switch(index)
-    {
-        case data_index::graph_1:
-        {   
-            
-            QPoint start_pos(data.constructor_frame.left() + data.constructor_frame.width() * 0.5f, data.constructor_frame.top());
-            QPoint end_pos(data.constructor_frame.left() + data.constructor_frame.width() * 0.5f, data_list[static_cast<int>(data_index::point_1)].constructor_frame.bottom());
-            painter.drawLine(start_pos, end_pos);
-        }
-    }
+    current = nullptr;
 }
